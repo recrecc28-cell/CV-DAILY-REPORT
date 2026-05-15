@@ -190,7 +190,7 @@ export default function App() {
 
       const processedGroups: ManagerGroup[] = Object.entries(groups).map(([manager, records]) => ({
         manager,
-        records: records.sort((a, b) => b.fyc - a.fyc),
+        records: records.sort((a, b) => a.name.localeCompare(b.name)),
         totalFYC: records.reduce((sum, r) => sum + r.fyc, 0),
         totalCases: records.reduce((sum, r) => sum + r.cases, 0)
       })).sort((a, b) => b.totalFYC - a.totalFYC);
@@ -372,12 +372,9 @@ export default function App() {
                       </div>
                     </div>
                     
-                    <div className="w-48 bg-white m-3 rounded-2xl border-4 border-[#419CD8] shadow-inner flex items-center justify-center flex-shrink-0">
-                      <div className="flex flex-col items-center">
-                        <div className="w-12 h-12 border-[3px] border-red-500 rounded-full flex items-center justify-center relative">
-                          <span className="text-red-500 text-2xl font-black italic">C</span>
-                        </div>
-                        <span className="text-[#419CD8] text-[10px] font-black italic mt-1 tracking-tighter uppercase">CALVIN WONG TEAM</span>
+                    <div className="w-56 bg-white m-3 rounded-2xl border-4 border-[#419CD8] shadow-inner flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+                      <div className="flex flex-col items-center justify-center p-2 relative w-full h-full min-h-[5rem]">
+                        <img src="/logo.png" className="w-full h-full object-contain mix-blend-multiply" alt="CV District" />
                       </div>
                     </div>
                   </div>
