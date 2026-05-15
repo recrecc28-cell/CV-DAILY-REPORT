@@ -241,52 +241,86 @@ export default function App() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* File Slot 1 */}
               <div className={cn(
-                "relative border-2 border-dashed rounded-3xl flex flex-col items-center justify-center p-8 transition-all cursor-pointer group",
-                headcountFile ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200 hover:border-blue-400"
+                "relative border-2 border-dashed rounded-3xl flex flex-col items-center justify-center p-8 transition-all group",
+                headcountFile ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200 hover:border-blue-400 cursor-pointer"
               )}>
-                <input
-                  type="file"
-                  accept=".xlsx, .xls"
-                  onChange={(e) => handleFileUpload(e, 'headcount')}
-                  className="absolute inset-0 opacity-0 cursor-pointer"
-                />
+                {!headcountFile && (
+                  <input
+                    type="file"
+                    accept=".xlsx, .xls"
+                    onChange={(e) => handleFileUpload(e, 'headcount')}
+                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                  />
+                )}
+                
+                {headcountFile && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setHeadcountFile(null);
+                      setReportData(null);
+                    }}
+                    className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-sm border border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-200 transition-colors z-20"
+                    title="移除檔案"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                )}
+
                 <div className={cn(
-                  "w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md mb-4 border transition-transform group-hover:scale-110",
+                  "w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md mb-4 border transition-transform group-hover:scale-110 relative z-0",
                   headcountFile ? "border-emerald-100" : "border-slate-100"
                 )}>
                   {headcountFile ? <CheckCircle2 className="w-7 h-7 text-emerald-500" /> : <Users className="w-7 h-7 text-blue-500" />}
                 </div>
-                <p className="font-bold text-slate-700 text-lg">{headcountFile ? headcountFile.name : "Headcount Excel (D/J行)"}</p>
-                <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <p className="font-bold text-slate-700 text-lg relative z-0 text-center">{headcountFile ? headcountFile.name : "Headcount Excel (D/J行)"}</p>
+                <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest relative z-0">
                   {headcountFile ? "已選擇檔案" : "點擊或拖放檔案"}
                 </div>
               </div>
 
               {/* File Slot 2 */}
               <div className={cn(
-                "relative border-2 border-dashed rounded-3xl flex flex-col items-center justify-center p-8 transition-all cursor-pointer group",
-                productionFile ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200 hover:border-blue-400"
+                "relative border-2 border-dashed rounded-3xl flex flex-col items-center justify-center p-8 transition-all group",
+                productionFile ? "bg-emerald-50 border-emerald-200" : "bg-slate-50 border-slate-200 hover:border-blue-400 cursor-pointer"
               )}>
-                <input
-                  type="file"
-                  accept=".xlsx, .xls"
-                  onChange={(e) => handleFileUpload(e, 'production')}
-                  className="absolute inset-0 opacity-0 cursor-pointer"
-                />
+                {!productionFile && (
+                  <input
+                    type="file"
+                    accept=".xlsx, .xls"
+                    onChange={(e) => handleFileUpload(e, 'production')}
+                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                  />
+                )}
+                
+                {productionFile && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setProductionFile(null);
+                      setReportData(null);
+                    }}
+                    className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-sm border border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-200 transition-colors z-20"
+                    title="移除檔案"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                )}
+
                 <div className={cn(
-                  "w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md mb-4 border transition-transform group-hover:scale-110",
+                  "w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-md mb-4 border transition-transform group-hover:scale-110 relative z-0",
                   productionFile ? "border-emerald-100" : "border-slate-100"
                 )}>
                   {productionFile ? <CheckCircle2 className="w-7 h-7 text-emerald-500" /> : <TrendingUp className="w-7 h-7 text-blue-500" />}
                 </div>
-                <p className="font-bold text-slate-700 text-lg">{productionFile ? productionFile.name : "Production Excel (B/E行)"}</p>
-                <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <p className="font-bold text-slate-700 text-lg relative z-0 text-center">{productionFile ? productionFile.name : "Production Excel (B/E行)"}</p>
+                <div className="mt-4 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest relative z-0">
                   {productionFile ? "已選擇檔案" : "點擊或拖放檔案"}
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-center gap-4">
               <button
                 onClick={processFiles}
                 disabled={!headcountFile || !productionFile || isProcessing}
@@ -298,6 +332,12 @@ export default function App() {
                 )}
               >
                 {isProcessing ? "正在處理..." : "生成報表結果"}
+              </button>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-8 py-3 rounded-xl font-bold text-lg transition-all shadow-xl bg-slate-800 text-white hover:bg-slate-700 hover:scale-105 flex items-center gap-3"
+              >
+                重新上傳
               </button>
             </div>
 
