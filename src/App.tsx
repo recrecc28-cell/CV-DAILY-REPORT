@@ -374,7 +374,9 @@ export default function App() {
                     
                     <div className="w-56 bg-white m-3 rounded-2xl border-4 border-[#419CD8] shadow-inner flex items-center justify-center flex-shrink-0 relative overflow-hidden">
                       <div className="flex flex-col items-center justify-center p-2 relative w-full h-full min-h-[5rem]">
-                        <img src="/logo.png" className="w-full h-full object-contain mix-blend-multiply" alt="CV District" />
+                        <span className="text-[#419CD8] text-3xl font-black italic tracking-tighter uppercase px-2 text-center leading-none">
+                          CV DISTRICT
+                        </span>
                       </div>
                     </div>
                   </div>
